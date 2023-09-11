@@ -14,14 +14,31 @@ public class playerControler : MonoBehaviour
     public float JumpStrength;
     public GameObject PlayerCamera;
     public float MouseSens;
+
+    [Header("Guns")]
+    public GameObject barrel;
+    public int Damage;
+    public GameObject ammo;
+    private bool Shot;
     void Start()
     {
         PlayerRidg = gameObject.GetComponent<Rigidbody>();
+        Shot = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            if(Shot == false)
+            {
+            StartCoroutine(Shooting(1000,300));
+            }
+
+        }
         //Locking the mouse
         Cursor.lockState = CursorLockMode.Locked;
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -85,6 +102,16 @@ public class playerControler : MonoBehaviour
         {
             PlayerRidg.velocity = PlayerRidg.velocity.normalized * MaxMovementSpeed;
         }
+    }
+    public IEnumerator Shooting(int Rpm,float Damage)
+    {
+        Shot = true;
+        var Bullet = Instantiate(ammo, barrel.transform.position,Quaternion.identity, null).GetComponent<BulletScript>();
+        Bullet.Damage = Damage;
+        Bullet.HeadShotMult = 2;
+        Bullet.Muzzelvelocity = 1;
+       yield return new WaitForSeconds(60 / Rpm);
+        Shot = false;
     }
     public void OnCollisionEnter(Collision collision)
     {
