@@ -780,8 +780,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066871770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.1, y: 0.63, z: 0.06}
-  m_LocalScale: {x: 1, y: 1.5, z: 4}
+  m_LocalPosition: {x: 14.86, y: 0.32, z: 0.06}
+  m_LocalScale: {x: 1, y: 0.9261441, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -974,8 +974,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274932084}
   m_LocalRotation: {x: -0, y: -0.7122871, z: -0, w: 0.70188826}
-  m_LocalPosition: {x: 1.01, y: 0.63, z: -10.55}
-  m_LocalScale: {x: 1, y: 1.5, z: 4}
+  m_LocalPosition: {x: 1.01, y: 0.32, z: -10.55}
+  m_LocalScale: {x: 1, y: 0.9261441, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1323,11 +1323,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5aa10299270c44cb7f81eb9e0f8bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 10
-  MaxMovementSpeed: 10
+  MovementSpeed: 5
+  MaxMovementSpeed: 20
   TouchingGround: 1
   AirDrag: 0.3
-  JumpStrength: 10
+  JumpStrength: 5
   PlayerCamera: {fileID: 963194225}
   MouseSens: 1
   barrel: {fileID: 1301656443}
@@ -1519,8 +1519,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1950498710}
   m_LocalRotation: {x: -0, y: -0.7073719, z: -0, w: 0.7068416}
-  m_LocalPosition: {x: 2.88, y: 0.63, z: 10.33}
-  m_LocalScale: {x: 1, y: 1.5, z: 4}
+  m_LocalPosition: {x: 2.88, y: 0.32, z: 10.33}
+  m_LocalScale: {x: 1, y: 0.92614406, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
