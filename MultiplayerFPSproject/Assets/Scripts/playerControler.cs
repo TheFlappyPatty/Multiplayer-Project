@@ -16,28 +16,27 @@ public class playerControler : MonoBehaviour
     public float MouseSens;
 
     [Header("Guns")]
+    public GameObject[] CurrentWeapons;
     public GameObject barrel;
-    public int Damage;
     public GameObject ammo;
+    public WeaponScript Weapion;
     private bool Shot;
     void Start()
     {
         PlayerRidg = gameObject.GetComponent<Rigidbody>();
+        Weapion = CurrentWeapons[0].GetComponent<WeaponScript>();
         Shot = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
         if (Input.GetKey(KeyCode.Mouse0))
         {
             if(Shot == false)
             {
-            StartCoroutine(Shooting(1000,300));
+            StartCoroutine(Shooting(Weapion.FireRate,Weapion.Damage,Weapion.MuzzleVelocity,Weapion.AmmoType));
             }
-
         }
         //Locking the mouse
         Cursor.lockState = CursorLockMode.Locked;
@@ -103,13 +102,14 @@ public class playerControler : MonoBehaviour
             PlayerRidg.velocity = PlayerRidg.velocity.normalized * MaxMovementSpeed;
         }
     }
-    public IEnumerator Shooting(int Rpm,float Damage)
+    public IEnumerator Shooting(int Rpm,float Damage,int MuzzleVelocity,WeaponScript.BulletType Ammotypes)
     {
         Shot = true;
-        var Bullet = Instantiate(ammo, barrel.transform.position,Quaternion.identity, null).GetComponent<BulletScript>();
+        var Bullet = Instantiate(ammo, barrel.transform.position,transform.rotation, null).GetComponent<BulletScript>();
         Bullet.Damage = Damage;
         Bullet.HeadShotMult = 2;
-        Bullet.Muzzelvelocity = 1;
+        Bullet.Muzzelvelocity = MuzzleVelocity;
+        Bullet.ShotType = Ammotypes;
        yield return new WaitForSeconds(60 / Rpm);
         Shot = false;
     }
