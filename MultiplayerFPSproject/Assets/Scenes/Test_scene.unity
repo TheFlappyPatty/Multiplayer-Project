@@ -3698,7 +3698,7 @@ GameObject:
   - component: {fileID: 1939938862}
   - component: {fileID: 1939938861}
   - component: {fileID: 1939938860}
-  - component: {fileID: 1939938859}
+  - component: {fileID: 1939938863}
   - component: {fileID: 1939938858}
   - component: {fileID: 1939938857}
   m_Layer: 0
@@ -3720,11 +3720,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5aa10299270c44cb7f81eb9e0f8bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 5
+  MovementSpeed: 10
   MaxMovementSpeed: 20
-  TouchingGround: 1
-  AirDrag: 0.3
-  JumpStrength: 5
+  gravitymulti: 0.05
+  JumpStrength: 60
   PlayerCamera: {fileID: 963194225}
   MouseSens: 1
   CurrentWeapons:
@@ -3749,20 +3748,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!136 &1939938859
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939938856}
-  m_Material: {fileID: 13400000, guid: 9918d562adbdf634c8bb30c0c567fc62, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1939938860
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3821,7 +3806,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939938856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.38, y: 1.05, z: 1}
+  m_LocalPosition: {x: -3.38, y: 1.82, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3829,6 +3814,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!143 &1939938863
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939938856}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1958079214
 GameObject:
   m_ObjectHideFlags: 0
@@ -4478,6 +4481,10 @@ PrefabInstance:
     - target: {fileID: 4803797665700203761, guid: d3d8432ee979ae64ab77492bd4e9a7b1, type: 3}
       propertyPath: m_Name
       value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803797665700203761, guid: d3d8432ee979ae64ab77492bd4e9a7b1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4803797665700203764, guid: d3d8432ee979ae64ab77492bd4e9a7b1, type: 3}
       propertyPath: m_RootOrder

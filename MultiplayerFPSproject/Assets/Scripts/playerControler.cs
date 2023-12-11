@@ -5,12 +5,12 @@ using UnityEngine;
 public class playerControler : MonoBehaviour
 {
     // Start is called before the first frame update
+    private CharacterController characterController;
     private Rigidbody PlayerRidg;
 
     public float MovementSpeed;
     public float MaxMovementSpeed;
-    public bool TouchingGround;
-    public float AirDrag;
+    public float gravitymulti;
     public float JumpStrength;
     public GameObject PlayerCamera;
     public float MouseSens;
@@ -23,6 +23,7 @@ public class playerControler : MonoBehaviour
     private bool Shot;
     void Start()
     {
+        characterController = gameObject.GetComponent<CharacterController>();
         PlayerRidg = gameObject.GetComponent<Rigidbody>();
         Weapion = CurrentWeapons[0].GetComponent<WeaponScript>();
         Shot = false;
@@ -31,6 +32,21 @@ public class playerControler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log(characterController.isGrounded);
+
+        //PlayerMovement 
+        Vector3 MoveDir = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal");
+        //Player Jump
+        if (Input.GetKeyDown(KeyCode.Space) && characterController.isGrounded)
+        {
+            MoveDir.y += JumpStrength;
+        }
+        MoveDir += Physics.gravity * gravitymulti;
+        characterController.Move(MoveDir * MovementSpeed * Time.deltaTime);
+
+
+        //shoots the currently held gun
         if (Input.GetKey(KeyCode.Mouse0))
         {
             if(Shot == false)
@@ -38,64 +54,21 @@ public class playerControler : MonoBehaviour
             StartCoroutine(Shooting(Weapion.FireRate,Weapion.Damage,Weapion.MuzzleVelocity,Weapion.AmmoType));
             }
         }
-        //Locking the mouse
+
+
+        //Locking the mouse and Mouse Controls
         Cursor.lockState = CursorLockMode.Locked;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Cursor.lockState = CursorLockMode.None;
         }
-
-        //Player Camera Controls
         gameObject.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * MouseSens, 0));
         PlayerCamera.transform.Rotate(new Vector3(-Input.GetAxis("Mouse Y") * MouseSens, 0, 0));
 
 
-        //Player Jump
-        if (Input.GetKeyDown(KeyCode.Space) && TouchingGround)
-        {
-            PlayerRidg.drag = AirDrag;
-            PlayerRidg.AddForce(Vector3.up * JumpStrength, ForceMode.VelocityChange);
 
-            TouchingGround = false;
-        }
 
-        //PlayerMovement 
-        if (TouchingGround == true)
-        {
-            if (Input.GetKey(KeyCode.A))
-            {
-                PlayerRidg.AddForce(-transform.right * MovementSpeed, ForceMode.Force);
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                PlayerRidg.AddForce(transform.right * MovementSpeed, ForceMode.Force);
-            }
-            if (Input.GetKey(KeyCode.W))
-            {
-                PlayerRidg.AddForce(transform.forward * MovementSpeed, ForceMode.Force);
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                PlayerRidg.AddForce(-transform.forward * MovementSpeed, ForceMode.Force);
-            }
-        } else {
-            if (Input.GetKey(KeyCode.A))
-            {
-                PlayerRidg.AddForce(-transform.right * MovementSpeed / 5, ForceMode.Force);
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                PlayerRidg.AddForce(transform.right * MovementSpeed / 5, ForceMode.Force);
-            }
-            if (Input.GetKey(KeyCode.W))
-            {
-                PlayerRidg.AddForce(transform.forward * MovementSpeed / 5, ForceMode.Force);
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                PlayerRidg.AddForce(-transform.forward * MovementSpeed / 5, ForceMode.Force);
-            }
-        }
+
         //limits the players speed
         if (PlayerRidg.velocity.magnitude >= MaxMovementSpeed)
         {
@@ -113,12 +86,4 @@ public class playerControler : MonoBehaviour
        yield return new WaitForSeconds(60 / Rpm);
         Shot = false;
     }
-    public void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.tag == "Ground")
-        {
-            TouchingGround = true;
-            PlayerRidg.drag = 5;
-        }
-    }
-    }
+}
